@@ -30,7 +30,7 @@ This protocol still has a lot of bugs! Do not use it in serious projects!
 
 ### CONNECT:
 Client - Sends 0x01 (CONNECT)  
-Server - Answers with 0x02 (CONNACK), if connecting is allowed to connect, if not server will send a 0x00
+Server - Answers with 0x02 (CONNACK), if client is allowed to connect, if not server will send a 0x00
 
 ### PUBLISH:
 Client - Starts with 0x03 (PUBLISH)  
