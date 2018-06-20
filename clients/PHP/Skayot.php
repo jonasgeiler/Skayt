@@ -178,8 +178,8 @@ class Skayot {
 	}
 }
 
-// DEMO - Uncomment to test it
-
+// DEMO - Uncomment to test it (compatible with the NodeMCU client demo)
+/*
 $address = '192.168.1.110';
 $port = 2470;
 
@@ -193,4 +193,4 @@ while(true) {
 
 	$skayot->publish($topic, $action);
 }
-
+*/

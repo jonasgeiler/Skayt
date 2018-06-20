@@ -180,7 +180,8 @@ end
 
 
 
---[[   DEMO   ]]--
+-- DEMO --
+--[[
 skayot_connect("192.168.1.110", function()
     skayot_subscribe("light/1")
     skayot_subscribe("light/2")
@@ -212,4 +213,4 @@ skayot_connect("192.168.1.110", function()
         gpio.write(pin, val)
     end)
 end)
---[[]]--
+]]--
