@@ -26,14 +26,14 @@ protocol.ZERO = 0x00
 
 
 
--- SkayoTT-Server --
-pcall(function() SkayoTT_Server:close() end) -- Close old server if still open
+-- Skayot-Server --
+pcall(function() Skayot_Server:close() end) -- Close old server if still open
 
-SkayoTT_Server = net.createServer()
+Skayot_Server = net.createServer()
 
 clients = {}
 
-SkayoTT_Server:listen(1337, function(conn)
+Skayot_Server:listen(2470, function(conn)
     conn:on("connection", function(client, payload)
         print("Connection")
     end)
@@ -60,7 +60,7 @@ SkayoTT_Server:listen(1337, function(conn)
         else 
             print("Unknown Command.")
             print("Sending: ", protocol.ZERO)
-            client:send(protocol.ZERO)
+            client:send(string.char(protocol.ZERO))
         end
     end)
     
@@ -211,11 +211,11 @@ function connect(client)
     if success then
         print("Connection accepted.")
         print("Sending: ", protocol.CONNACK)
-        client:send(protocol.CONNACK)
+        client:send(string.char(protocol.CONNACK))
     else
         print("Connection declined.")
         print("Sending: ", protocol.ZERO)
-        client:send(protocol.ZERO)
+        client:send(string.char(protocol.ZERO))
     end
 end
 
@@ -246,11 +246,11 @@ function subscribe(client, payload)
     if success then
         print("Successfully subscribed!")
         print("Sending: ", protocol.SUBACK)
-        client:send(protocol.SUBACK)
+        client:send(string.char(protocol.SUBACK))
     else
         print("Subscribe failed.")
         print("Sending: ", protocol.ZERO)
-        client:send(protocol.ZERO)
+        client:send(string.char(protocol.ZERO))
     end
 end
 
@@ -283,11 +283,11 @@ function publish(client, payload)
     if success then
         print("Successfully published!")
         print("Sending: ", protocol.PUBACK)
-        client:send(protocol.PUBACK)
+        client:send(string.char(protocol.PUBACK))
     else
         print("Publish failed.")
         print("Sending: ", protocol.ZERO)
-        client:send(protocol.ZERO)
+        client:send(string.char(protocol.ZERO))
     end
 end
 
@@ -306,11 +306,11 @@ function unsubscribe(client, payload)
     if success then
         print("Successfully unsubscribed!")
         print("Sending: ", protocol.UNSUBACK)
-        client:send(protocol.UNSUBACK)
+        client:send(string.char(protocol.UNSUBACK))
     else
         print("Unsubscribe failed.")
         print("Sending: ", protocol.ZERO)
-        client:send(protocol.ZERO)
+        client:send(string.char(protocol.ZERO))
     end
 end
 

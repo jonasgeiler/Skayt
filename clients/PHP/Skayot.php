@@ -20,7 +20,7 @@ define('p_SUBMSG_ENDMSG', 0x1f);
 
 define('p_ZERO', 0x00);
 
-class SkayoTT {
+class Skayot {
 	public $address;
 	public $post;
 
@@ -69,7 +69,7 @@ class SkayoTT {
 
 		fwrite($this->socket, $buffer);
 
-		if($this->read(1) == p_CONNACK) {
+		if(ord($this->read(1)) == p_CONNACK) {
 			if($this->debug) echo 'Connection accepted!' . PHP_EOL;
 			return true;
 		} else {
@@ -101,7 +101,7 @@ class SkayoTT {
 
 		fwrite($this->socket, $buffer);
 
-		if($this->read(1) == p_SUBACK) {
+		if(ord($this->read(1)) == p_SUBACK) {
 			if($this->debug) echo 'Subscribe successful!' . PHP_EOL;
 			return true;
 		} else {
@@ -120,7 +120,7 @@ class SkayoTT {
 
 		fwrite($this->socket, $buffer);
 
-		if($this->read(1) == p_PUBACK) {
+		if(ord($this->read(1)) == p_PUBACK) {
 			if($this->debug) echo 'Publish successful!' . PHP_EOL;
 			return true;
 		} else {
@@ -137,7 +137,7 @@ class SkayoTT {
 
 		fwrite($this->socket, $buffer);
 
-		if($this->read(1) == p_UNSUBACK) {
+		if(ord($this->read(1)) == p_UNSUBACK) {
 			if($this->debug) echo 'Unsubscribe successful!' . PHP_EOL;
 			return true;
 		} else {
@@ -179,24 +179,18 @@ class SkayoTT {
 }
 
 // DEMO - Uncomment to test it
-/*
+
 $address = '192.168.1.110';
-$port = 1337;
+$port = 2470;
 
-$skayott = new SkayoTT($address, $port, true);
-$skayott->connect();
-$skayott->subscribe('/lights');
-$skayott->publish('/lights', 'ON');
+$skayot = new Skayot($address, $port, true);
+$skayot->connect();
 while(true) {
-	$message = $skayott->checkForMessage();
+	$input = readline('Send: ');
+	[$lightNum, $action] = explode(" ", $input);
 
-	if($message) {
-		echo "Received '" . $message['msg'] . "' from " . $message['topic'] . PHP_EOL;
-	}
+	$topic = 'light/' . $lightNum;
 
-	if($message == 'ON' && $topic == '/lights') {
-		$skayott->unsubscribe('/lights');
-		exit();
-	}
+	$skayot->publish($topic, $action);
 }
-*/
+
